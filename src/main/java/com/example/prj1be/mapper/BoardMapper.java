@@ -2,6 +2,7 @@ package com.example.prj1be.mapper;
 
 
 import com.example.prj1be.domain.Board;
+import com.example.prj1be.domain.BoardList;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,4 +15,8 @@ public interface BoardMapper {
             """)
     int insert(Board board);
 
+    @Insert("""
+            INSERT INTO board
+            """)
+    String list(BoardList boardList);
 }

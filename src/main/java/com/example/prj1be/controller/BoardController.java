@@ -2,13 +2,11 @@ package com.example.prj1be.controller;
 
 
 import com.example.prj1be.domain.Board;
+import com.example.prj1be.domain.BoardList;
 import com.example.prj1be.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController // controller + responseBody
 @RequiredArgsConstructor
@@ -19,6 +17,7 @@ public class BoardController {
 
     @PostMapping("add")
     public ResponseEntity add(@RequestBody Board board) {
+
         if( !service.validate(board)) {
             return ResponseEntity.badRequest().build();
         }
@@ -29,4 +28,12 @@ public class BoardController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @GetMapping("list")
+    public ResponseEntity  list(@RequestBody BoardList boardList) {
+
+
+    }
+
+
 }

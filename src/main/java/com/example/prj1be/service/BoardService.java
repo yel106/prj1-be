@@ -1,6 +1,7 @@
 package com.example.prj1be.service;
 
 import com.example.prj1be.domain.Board;
+import com.example.prj1be.domain.BoardList;
 import com.example.prj1be.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,10 @@ public class BoardService {
         if( board.getWriter() == null || board.getWriter().isBlank()) {
             return false;
         }
-
         return true;
+    }
+
+    public String list(BoardList boardList) {
+        return mapper.list(boardList);
     }
 }
