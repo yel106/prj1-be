@@ -1,10 +1,7 @@
 package com.example.prj1be.mapper;
 
 import com.example.prj1be.domain.Member;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -51,4 +48,11 @@ public interface MemberMapper {
             WHERE ID = #{id}
             """)
     int deleteById(String id);
+
+    @Update("""
+            UPDATE member
+            SET password= #{password}, email= #{email}
+            WHERE id = #{id}
+            """)
+    int editMember(String id);
 }

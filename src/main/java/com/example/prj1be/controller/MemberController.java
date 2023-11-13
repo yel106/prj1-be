@@ -68,9 +68,15 @@ public class MemberController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.internalServerError().build();
+    }
 
+    @PutMapping
+    public ResponseEntity edit(String id) {
 
-
+        if (service.editMember(id)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.internalServerError().build();
     }
 
 

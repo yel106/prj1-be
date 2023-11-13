@@ -4,6 +4,7 @@ package com.example.prj1be.service;
 import com.example.prj1be.domain.Member;
 import com.example.prj1be.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,5 +59,10 @@ public class MemberService {
 
     public boolean deleteMember(String id) {
         return mapper.deleteById(id) ==1;
+    }
+
+
+    public boolean editMember(String id) {
+        return mapper.editMember(id) ==1;
     }
 }
