@@ -29,6 +29,8 @@ public class MemberService {
         return mapper.selectEmail(email);
     }
 
+
+
     public boolean validate(Member member) {
         if (member ==null) {
             return false;
@@ -67,4 +69,10 @@ public class MemberService {
 //        }
         return mapper.update(member) ==1;
     }
+
+    public String getNickName(String nickName) {
+        return mapper.selectNickName(nickName);
+    }
+
+
 }
