@@ -68,10 +68,8 @@ public class MemberController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.internalServerError().build();
-
-
-
     }
+
 
 
 }
