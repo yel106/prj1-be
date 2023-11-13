@@ -65,9 +65,6 @@ public class MemberService {
 //        if (member.getPassword().equals("")) {
 //            member.setPassword(oldMember.getPassword());
 //        }
-
-
-
         return mapper.update(member) ==1;
     }
 }

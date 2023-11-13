@@ -28,7 +28,7 @@ public interface MemberMapper {
     String selectEmail(String email);
 
     @Select("""
-            SELECT id, password, email, inserted
+            SELECT id, password, email, nickName, inserted
             FROM member
             ORDER BY inserted DESC
             """)
