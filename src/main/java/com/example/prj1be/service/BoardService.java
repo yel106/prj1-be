@@ -12,12 +12,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardService {
 
+    private final MemberService memberService;
     private final BoardMapper mapper;
 
     public boolean save(Board board, Member login) {
         board.setWriter(login.getId());
 
-        return mapper.insert(board) ==1;
+        return mapper.insert(board) == 1;
     }
 
     public boolean validate(Board board) {
@@ -25,7 +26,7 @@ public class BoardService {
             return false;
         }
 
-        if( board.getContent() == null || board.getContent().isBlank()) {
+        if (board.getContent() == null || board.getContent().isBlank()) {
             return false;
         }
         if (board.getTitle() == null || board.getTitle().isBlank()) {
@@ -45,16 +46,23 @@ public class BoardService {
     }
 
     public boolean remove(Integer id) {
-        return mapper.deleteById(id) ==1;
+        return mapper.deleteById(id) == 1;
     }
 
     public boolean update(Board board) {
-        return mapper.update(board) ==1;
+        return mapper.update(board) == 1;
     }
 
     public boolean hasAccess(Integer id, Member login) {
+
+        if (memberService.isAdmin(login)) {
+            return true;
+        }
+
         Board board = mapper.selectById(id);
 
         return board.getWriter().equals(login.getId()); //같으면 권한 있는것.
     }
+
+
 }
