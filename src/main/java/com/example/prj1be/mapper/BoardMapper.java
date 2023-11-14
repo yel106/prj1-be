@@ -20,6 +20,7 @@ public interface BoardMapper {
             SELECT b.id, 
             b.title, 
             b.writer, 
+            m.nickName,
             b.inserted
             FROM board b JOIN member m ON b.writer = m.id
             ORDER BY id DESC 
