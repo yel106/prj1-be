@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
 
@@ -94,13 +95,12 @@ public class MemberController {
 
     @PostMapping("login")
     /* 아이디가 넘어오게 member로 받음*/
-    public ResponseEntity login(@RequestBody  Member member) {
+    public ResponseEntity login(@RequestBody  Member member, WebRequest request) {
 
-        if (service.login(member)) {
+        if (service.login(member, request)) {
             return ResponseEntity.ok().build();
         }else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); //권한 없음.로그인 안된경우
-
         }
     }
 
