@@ -2,6 +2,7 @@ package com.example.prj1be.controller;
 
 import com.example.prj1be.domain.Member;
 import com.example.prj1be.service.MemberService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -31,7 +32,7 @@ public class MemberController {
         }
     }
 
-    @GetMapping(value = "check", params="id")
+    @GetMapping(value = "check", params = "id")
     public ResponseEntity checkId(String id) {
         if (service.getId(id) == null) {
             return ResponseEntity.notFound().build();
@@ -40,9 +41,9 @@ public class MemberController {
         }
     }
 
-    @GetMapping(value = "check", params="email")
+    @GetMapping(value = "check", params = "email")
     public ResponseEntity checkEmail(String email) {
-        if(service.getEmail(email)== null) {
+        if (service.getEmail(email) == null) {
             return ResponseEntity.notFound().build();
         } else {
             return ResponseEntity.ok().build();
@@ -51,7 +52,7 @@ public class MemberController {
 
     @GetMapping(value = "check", params = "nickName")
     public ResponseEntity checkNickName(String nickName) {
-        if(service.getNickName(nickName) == null) {
+        if (service.getNickName(nickName) == null) {
             return ResponseEntity.notFound().build();
         } else {
             return ResponseEntity.ok().build();
@@ -86,7 +87,7 @@ public class MemberController {
     public ResponseEntity edit(@RequestBody Member member) {
         // TODO: 로그인 했는지? 자기 정보인지?
 
-        if( service.update(member)) {
+        if (service.update(member)) {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.internalServerError().build();
@@ -95,17 +96,22 @@ public class MemberController {
 
     @PostMapping("login")
     /* 아이디가 넘어오게 member로 받음*/
-    public ResponseEntity login(@RequestBody  Member member, WebRequest request) {
+    public ResponseEntity login(@RequestBody Member member, WebRequest request) {
 
         if (service.login(member, request)) {
             return ResponseEntity.ok().build();
-        }else {
+        } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); //권한 없음.로그인 안된경우
         }
     }
 
 
-
+    @PostMapping("logout")
+    public void logout(HttpSession session) {
+        if (session != null) {
+            session.invalidate();
+        }
+    }
 
 
 }
