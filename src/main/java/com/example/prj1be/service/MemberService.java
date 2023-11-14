@@ -75,4 +75,15 @@ public class MemberService {
     }
 
 
+    public boolean login(Member member) {
+        Member dbMember = mapper.selectById(member.getId());
+
+        //가져온 값이 널이 아니고 얻어온 패스워드가 member의 패스워드와 같으면 로그인 성공
+        if (dbMember != null) {
+            if ( dbMember.getPassword().equals(member.getPassword())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -3,6 +3,8 @@ package com.example.prj1be.controller;
 import com.example.prj1be.domain.Member;
 import com.example.prj1be.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -87,6 +89,18 @@ public class MemberController {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PostMapping("login")
+    /* 아이디가 넘어오게 member로 받음*/
+    public ResponseEntity login(@RequestBody  Member member) {
+
+        if (service.login(member)) {
+            return ResponseEntity.ok().build();
+        }else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); //권한 없음.로그인 안된경우
+
         }
     }
 
