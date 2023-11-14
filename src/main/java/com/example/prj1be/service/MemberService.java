@@ -1,6 +1,7 @@
 package com.example.prj1be.service;
 
 
+import com.example.prj1be.domain.Auth;
 import com.example.prj1be.domain.Member;
 import com.example.prj1be.mapper.BoardMapper;
 import com.example.prj1be.mapper.MemberMapper;
@@ -20,7 +21,7 @@ public class MemberService {
     private final BoardMapper boardMapper;
 
     public boolean add(Member member) {
-        return mapper.insert(member) ==1 ;
+        return mapper.insert(member) == 1;
 
     }
 
@@ -34,21 +35,20 @@ public class MemberService {
     }
 
 
-
     public boolean validate(Member member) {
-        if (member ==null) {
+        if (member == null) {
             return false;
         }
 
-        if(member.getEmail().isBlank()) {
+        if (member.getEmail().isBlank()) {
             return false;
         }
 
-        if(member.getPassword().isBlank()) {
+        if (member.getPassword().isBlank()) {
             return false;
         }
 
-        if(member.getId().isBlank()) {
+        if (member.getId().isBlank()) {
             return false;
         }
         return true;
@@ -67,7 +67,7 @@ public class MemberService {
         boardMapper.deleteByWriter(id);
 
         // 2. 이 멤버 삭제
-        return mapper.deleteById(id) ==1;
+        return mapper.deleteById(id) == 1;
     }
 
     public boolean update(Member member) {
@@ -75,7 +75,7 @@ public class MemberService {
 //        if (member.getPassword().equals("")) {
 //            member.setPassword(oldMember.getPassword());
 //        }
-        return mapper.update(member) ==1;
+        return mapper.update(member) == 1;
     }
 
     public String getNickName(String nickName) {
@@ -86,9 +86,13 @@ public class MemberService {
     public boolean login(Member member, WebRequest request) {
         Member dbMember = mapper.selectById(member.getId());
 
+
         //가져온 값이 널이 아니고 얻어온 패스워드가 member의 패스워드와 같으면 로그인 성공
         if (dbMember != null) {
-            if ( dbMember.getPassword().equals(member.getPassword())) {
+            if (dbMember.getPassword().equals(member.getPassword())) {
+                List<Auth> auth = mapper.selectAuthById(member.getId());
+                dbMember.setAuth(auth);
+
                 dbMember.setPassword("");
                 request.setAttribute("login", dbMember, RequestAttributes.SCOPE_SESSION);
                 return true;
