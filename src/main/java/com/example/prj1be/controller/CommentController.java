@@ -42,5 +42,16 @@ public class CommentController {
         /*읽는거라 권한은 필요없음*/
     }
 
+    @GetMapping("edit")
+    public ResponseEntity edit(@RequestBody Comment comment,
+                               @SessionAttribute(value = "login", required = false) Member login) {
+//        if( login == null ) {
+//            ResponseEntity.status()
+//        }
+
+        return service.edit(comment);
+    }
+
+
 
 }

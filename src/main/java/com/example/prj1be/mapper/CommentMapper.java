@@ -4,6 +4,7 @@ import com.example.prj1be.domain.Comment;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -24,7 +25,5 @@ public interface CommentMapper {
     List<Comment> selectByBoardId(Integer boardId);
 
 
-
-
-
+    int editById(Comment comment);
 }
