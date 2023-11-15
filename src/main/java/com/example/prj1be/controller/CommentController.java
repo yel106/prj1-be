@@ -42,5 +42,11 @@ public class CommentController {
         /*읽는거라 권한은 필요없음*/
     }
 
+    @DeleteMapping("{id}")
+    public void remove(@PathVariable Integer id) {
+        // TODO: 권한 검증 코드....
+        service.remove(id);
+    }
+
 
 }
