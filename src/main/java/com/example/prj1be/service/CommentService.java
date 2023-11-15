@@ -20,14 +20,14 @@ public class CommentService {
     }
 
     public boolean validate(Comment comment) {
-        if( comment == null) {
+        if (comment == null) {
             return false;
         }
-        if( comment.getBoardId() ==null || comment.getBoardId() < 1) {
+        if (comment.getBoardId() == null || comment.getBoardId() < 1) {
             return false;
         }
 
-        if(comment.getComment() == null || comment.getComment().isBlank()) {
+        if (comment.getComment() == null || comment.getComment().isBlank()) {
             return false;
         }
 
@@ -38,7 +38,13 @@ public class CommentService {
         return mapper.selectByBoardId(boardId);
     }
 
-    public void remove(Integer id) {
-        mapper.deleteById(id);
+    public boolean remove(Integer id) {
+        return mapper.deleteById(id) == 1;
+    }
+
+    public boolean hasAccess(Integer id, Member login) {
+        Comment comment = mapper.selectById(id);
+
+        return comment.getMemberId().equals(login.getId());
     }
 }
