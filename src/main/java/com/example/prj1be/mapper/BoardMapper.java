@@ -17,14 +17,18 @@ public interface BoardMapper {
 
 
     @Select("""
-            SELECT b.id, 
-            b.title, 
-            b.writer, 
-            m.nickName,
-            b.inserted
+             SELECT
+                b.id,
+                b.title,
+                b.writer,
+                m.nickName,
+                b.inserted,
+                COUNT(c.id) countComment
             FROM board b JOIN member m ON b.writer = m.id
-            ORDER BY id DESC 
-            """)
+                         LEFT JOIN comment c on b.id = c.boardId
+            GROUP BY b.id
+            ORDER BY id DESC
+             """)
     List<Board> selectAll();
 
 

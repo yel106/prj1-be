@@ -61,7 +61,7 @@ public class CommentService {
             return false;
         }
 
-
+        //비어있는 댓글은 안되도록
         if(comment.getComment() == null || comment.getComment().isBlank()) {
             return false;
         }
