@@ -66,4 +66,11 @@ public interface BoardMapper {
             WHERE writer = #{writer}
             """)
     int deleteByWriter(String writer);
+
+    @Delete("""
+            DELETE FROM comment
+            WHERE 
+            """)
+    int deleteBoard();
+
 }

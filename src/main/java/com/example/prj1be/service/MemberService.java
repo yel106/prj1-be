@@ -70,6 +70,10 @@ public class MemberService {
         return mapper.deleteById(id) == 1;
     }
 
+    // 댓글이 있는 게시물 삭제
+
+
+
     public boolean update(Member member) {
 //        Member oldMember = mapper.selectById(member.getId());
 //        if (member.getPassword().equals("")) {
@@ -117,6 +121,7 @@ public class MemberService {
         }
         return false;
     }
+
 
 
 }

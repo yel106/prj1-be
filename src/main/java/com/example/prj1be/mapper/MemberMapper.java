@@ -79,4 +79,7 @@ public interface MemberMapper {
             WHERE memberId = #{id}
             """)
     List<Auth> selectAuthById(String id);
+
+
+
 }

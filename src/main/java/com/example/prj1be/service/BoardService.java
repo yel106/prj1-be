@@ -64,5 +64,8 @@ public class BoardService {
         return board.getWriter().equals(login.getId()); //같으면 권한 있는것.
     }
 
+    public boolean deleteBoard(String id) {
+        return mapper.deleteBoard() ==1;
+    }
 
 }

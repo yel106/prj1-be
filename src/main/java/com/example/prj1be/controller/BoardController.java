@@ -90,5 +90,13 @@ public class BoardController {
 
             }
         }
+
+    @DeleteMapping
+    public ResponseEntity deleteBoard(@PathVariable Integer id,
+                            @SessionAttribute (value = "login", required = false) Member login) {
+        return service.deleteBoard();
+    }
+
+
     }
 
