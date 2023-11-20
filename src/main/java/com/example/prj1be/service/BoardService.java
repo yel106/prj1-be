@@ -45,26 +45,30 @@ public class BoardService {
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> pageInfo = new HashMap<>();
 
-        int countAll = mapper.countAll();
+//        int countAll = mapper.countAll();
+        int countAll = mapper.countAll("%" + keyword + "%");
         int lastPageNumber = (countAll - 1) / 10 + 1;
         int startPageNumber = (page - 1) / 10 * 10 + 1;
         int endPageNumber = startPageNumber + 9;
         endPageNumber = Math.min(endPageNumber, lastPageNumber);
+        int prevPageNumber = startPageNumber - 10;
+        int nextPageNumber = endPageNumber + 1;
 
+        pageInfo.put("currentPageNumber", page);
         pageInfo.put("startPageNumber", startPageNumber);
-        pageInfo.put("lastPageNumber", lastPageNumber);
+        pageInfo.put("endPageNumber", endPageNumber);
+        if (prevPageNumber > 0) {
+            pageInfo.put("prevPageNumber", prevPageNumber);
+        }
+        if (nextPageNumber <= lastPageNumber) {
+            pageInfo.put("nextPageNumber", nextPageNumber);
+        }
 
         int from = (page - 1) * 10;
-        map.put("boardList", mapper.selectAll(from,"%" + keyword + "%"));
+        map.put("boardList", mapper.selectAll(from, "%" + keyword + "%"));
         map.put("pageInfo", pageInfo);
         return map;
     }
-    // 아니면 dynamic SQL 이용.
-        /* Mapper에 추가. <script>도 써줘야함
-                <bind name="keyword" value=" '%' + keyword + '%'" />
-                WHERE b.content LIKE #{keyword}
-        OR b.title LIKE #{keyword}
-        */
 
     public Board get(Integer id) {
         return mapper.selectById(id);
