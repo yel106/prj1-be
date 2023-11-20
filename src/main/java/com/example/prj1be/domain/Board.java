@@ -19,9 +19,9 @@ public class Board {
     private Integer countComment;
     private Integer countLike;
 
-    //새로운 properties를 만들어서 쓸 수 있다.
     public String getAgo() {
         return AppUtil.getAgo(inserted, LocalDateTime.now());
     }
+
 
 }

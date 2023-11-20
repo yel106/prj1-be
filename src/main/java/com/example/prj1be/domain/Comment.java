@@ -1,6 +1,5 @@
 package com.example.prj1be.domain;
 
-
 import com.example.prj1be.util.AppUtil;
 import lombok.Data;
 
@@ -19,3 +18,12 @@ public class Comment {
         return AppUtil.getAgo(inserted, LocalDateTime.now());
     }
 }
+
+
+
+
+
+
+
+
+
