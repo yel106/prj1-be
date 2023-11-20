@@ -2,6 +2,7 @@ package com.example.prj1be.mapper;
 
 import com.example.prj1be.domain.Comment;
 import org.apache.ibatis.annotations.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
