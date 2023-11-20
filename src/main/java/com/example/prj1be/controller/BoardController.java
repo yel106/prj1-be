@@ -3,13 +3,11 @@ package com.example.prj1be.controller;
 import com.example.prj1be.domain.Board;
 import com.example.prj1be.domain.Member;
 import com.example.prj1be.service.BoardService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -39,11 +37,14 @@ public class BoardController {
     }
 
     // /api/board/list?p=6
+    // /api/board/list?k=java
+    // /api/board/list?p=7&k=java
     @GetMapping("list")
-    public Map<String, Object> list(@RequestParam(value = "p", defaultValue = "1") Integer page) {
+    public Map<String, Object> list(
+            @RequestParam(value = "p", defaultValue = "1") Integer page,
+            @RequestParam(value = "k", defaultValue = "") String keyword) {
 
-
-        return service.list(page);
+        return service.list(page, keyword); //두번째 파라미터 받는걸 해줘야함
     }
 
     @GetMapping("id/{id}")
