@@ -1,6 +1,7 @@
 package com.example.prj1be.service;
 
 import com.example.prj1be.domain.Board;
+import com.example.prj1be.domain.BoardFile;
 import com.example.prj1be.domain.Member;
 import com.example.prj1be.mapper.BoardMapper;
 import com.example.prj1be.mapper.CommentMapper;
@@ -18,6 +19,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -25,7 +27,6 @@ import java.util.Map;
 @Transactional(rollbackFor = Exception.class)
 //모두 적용받을수 있도록 class레벨에서 씀
 //runtime exception뿐만 아니라 checkException이 일어나도 롤백하도록 함
-
 public class BoardService {
 
     private final BoardMapper mapper;
@@ -35,7 +36,9 @@ public class BoardService {
 
     private final S3Client s3;
 
-    @Value("${aw3.s3.bucket.name}")
+    @Value("${image.file.prefix}")
+    private String urlPrefix;
+    @Value("${aws.s3.bucket.name}")
     private String bucket;
 
     public boolean save(Board board, MultipartFile[] files, Member login) throws IOException {
@@ -103,6 +106,9 @@ public class BoardService {
         int prevPageNumber = startPageNumber - 10;
         int nextPageNumber = endPageNumber + 1;
 
+
+
+
         pageInfo.put("currentPageNumber", page);
         pageInfo.put("startPageNumber", startPageNumber);
         pageInfo.put("endPageNumber", endPageNumber);
@@ -120,7 +126,18 @@ public class BoardService {
     }
 
     public Board get(Integer id) {
-        return mapper.selectById(id);
+        Board board = mapper.selectById(id);
+
+        List<BoardFile> boardFiles = fileMapper.selectNamesByBoardId(id);
+
+        for (BoardFile boardFile :
+                boardFiles) {
+            String url = urlPrefix + "prj1/" + id + "/" + boardFile.getName();
+            boardFile.setUrl(url);
+        }
+
+        board.setFiles(boardFiles);
+        return board;
     }
 
     public boolean remove(Integer id) {
