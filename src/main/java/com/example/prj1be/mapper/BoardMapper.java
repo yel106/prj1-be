@@ -12,6 +12,9 @@ public interface BoardMapper {
         INSERT INTO board (title, content, writer)
         VALUES (#{title}, #{content}, #{writer})
         """)
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+        //새로 생성된 키를 어디에 넣을건지 명시해줘야함
+        // file이 어떤 게시물의 파일인지 알아야함
     int insert(Board board);
 
     @Select("""
