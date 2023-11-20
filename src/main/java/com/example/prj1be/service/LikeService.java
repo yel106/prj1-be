@@ -20,7 +20,8 @@ public class LikeService {
 
         like.setMemberId(login.getId());
 
-        // 처음 좋아요 누를 때: insert
+        // 처음 좋아요 누를 때:
+        // insert
         // 다시 누르면 : delete
 
         int count = 0;
