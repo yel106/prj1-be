@@ -40,8 +40,9 @@ public interface FileMapper {
 
 
     @Delete("""
-        DELETE FROM boardFile
-        WHERE id = #{id}
-""")
+            DELETE FROM boardFile
+            WHERE id = #{id}
+            """)
     int deleteById(Integer id);
+
 }

@@ -3,8 +3,8 @@ package com.example.prj1be.controller;
 import com.example.prj1be.domain.Board;
 import com.example.prj1be.domain.Member;
 import com.example.prj1be.service.BoardService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class BoardController {
     public ResponseEntity add(Board board,
                               @RequestParam(value = "uploadFiles[]", required = false) MultipartFile[] files,
                               @SessionAttribute(value = "login", required = false) Member login) throws IOException {
-        
+
         if (login == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -47,9 +47,10 @@ public class BoardController {
     @GetMapping("list")
     public Map<String, Object> list(
             @RequestParam(value = "p", defaultValue = "1") Integer page,
-            @RequestParam(value = "k", defaultValue = "") String keyword) {
+            @RequestParam(value = "k", defaultValue = "") String keyword,
+            @RequestParam(value = "c", defaultValue = "all") String category) {
 
-        return service.list(page, keyword); //두번째 파라미터 받는걸 해줘야함
+        return service.list(page, keyword, category);
     }
 
     @GetMapping("id/{id}")
@@ -99,14 +100,6 @@ public class BoardController {
             return ResponseEntity.badRequest().build();
         }
     }
-
-
-
-
-
-
-
-
 }
 
 

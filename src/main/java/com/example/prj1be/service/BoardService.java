@@ -95,12 +95,12 @@ public class BoardService {
         return true;
     }
 
-    public Map<String, Object> list(Integer page, String keyword) {
+    public Map<String, Object> list(Integer page, String keyword, String category) {
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> pageInfo = new HashMap<>();
 
 //        int countAll = mapper.countAll();
-        int countAll = mapper.countAll("%" + keyword + "%");
+        int countAll = mapper.countAll("%" + keyword + "%", category);
         int lastPageNumber = (countAll - 1) / 10 + 1;
         int startPageNumber = (page - 1) / 10 * 10 + 1;
         int endPageNumber = startPageNumber + 9;
@@ -120,7 +120,7 @@ public class BoardService {
         }
 
         int from = (page - 1) * 10;
-        map.put("boardList", mapper.selectAll(from, "%" + keyword + "%"));
+        map.put("boardList", mapper.selectAll(from, "%" + keyword + "%", category));
         map.put("pageInfo", pageInfo);
         return map;
     }
@@ -176,10 +176,11 @@ public class BoardService {
     }
 
     public boolean update(Board board, List<Integer> removeFileIds, MultipartFile[] uploadFiles) throws IOException {
+
         // 파일 지우기
-        // s3에서 지우기
         if (removeFileIds != null) {
             for (Integer id : removeFileIds) {
+                // s3에서 지우기
                 BoardFile file = fileMapper.selectById(id);
                 String key = "prj1/" + board.getId() + "/" + file.getName();
                 DeleteObjectRequest objectRequest = DeleteObjectRequest.builder()
@@ -193,7 +194,6 @@ public class BoardService {
             }
         }
 
-
         // 파일 추가하기
         if (uploadFiles != null) {
             for (MultipartFile file : uploadFiles) {
@@ -203,8 +203,11 @@ public class BoardService {
                 fileMapper.insert(board.getId(), file.getOriginalFilename());
             }
         }
+
         return mapper.update(board) == 1;
     }
+
+
 
     public boolean hasAccess(Integer id, Member login) {
         if (login == null) {
